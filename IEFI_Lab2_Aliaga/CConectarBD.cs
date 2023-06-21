@@ -55,14 +55,7 @@ namespace IEFI_Lab2_Aliaga
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
-        public void CargarCombo1(ComboBox paises)
-        {
 
-            while(DR.Read())
-            {
-                paises.Items.Add(DR[3]);
-            }
-        }
 
         public void CargarCombo(ComboBox paises)
         {
@@ -131,21 +124,52 @@ namespace IEFI_Lab2_Aliaga
             cmdSocios.Connection.Open();
 
             cmdSocios.CommandType = CommandType.Text;
-            cmdSocios.CommandText = "SELECT NombrePais FROM Paises WHERE NombrePais = ?";
+            cmdSocios.CommandText = "SELECT COUNT(*) FROM Paises WHERE NombrePais = @Pais";
             cmdSocios.Parameters.AddWithValue("@Pais", pais);
-            DR = cmdSocios.ExecuteReader();
+            int count = (int)cmdSocios.ExecuteScalar();
 
-            if(DR.HasRows)
+            if (count > 0)
             {
-                MessageBox.Show("El pais ingresado ya existe");
-                return;
+                MessageBox.Show("El país ingresado ya existe");
             }
-            DR.Close();
-            cmdSocios.CommandText = "INSERT INTO Paises (NombrePais) VALUES (?)";
-            cmdSocios.Parameters.AddWithValue("@Pais", pais);
+            else
+            {
+                cmdSocios.Parameters.Clear();
+                cmdSocios.CommandText = "INSERT INTO Paises (NombrePais) VALUES (@Pais)";
+                cmdSocios.Parameters.AddWithValue("@Pais", pais);
 
-            cmdSocios.ExecuteNonQuery();
+                try
+                {
+                    cmdSocios.ExecuteNonQuery();
+                    MessageBox.Show("El país ha sido cargado exitosamente.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al cargar el país: " + ex.Message);
+                }
+            }
+
             cmdSocios.Connection.Close();
+
+            //cmdSocios.Connection = CNN;
+            //cmdSocios.Connection.Open();
+
+            //cmdSocios.CommandType = CommandType.Text;
+            //cmdSocios.CommandText = "SELECT NombrePais FROM Paises WHERE NombrePais = ?";
+            //cmdSocios.Parameters.AddWithValue("@Pais", pais);
+            //DR = cmdSocios.ExecuteReader();
+
+            //if(DR.HasRows)
+            //{
+            //    MessageBox.Show("El pais ingresado ya existe");
+            //    return;
+            //}
+            //DR.Close();
+            //cmdSocios.CommandText = "INSERT INTO Paises (NombrePais) VALUES (?)";
+            //cmdSocios.Parameters.AddWithValue("@Pais", pais);
+
+            //cmdSocios.ExecuteNonQuery();
+            //cmdSocios.Connection.Close();
         }
     }
 }

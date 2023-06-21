@@ -25,10 +25,10 @@ namespace IEFI_Lab2_Aliaga
                 cnn.CargarCombo(cmbLugar);
      
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
 
-                throw;
             }
         }
 
@@ -40,7 +40,7 @@ namespace IEFI_Lab2_Aliaga
                 string Apellido = txtApellido.Text;
                 string LugarNacimiento = cmbLugar.SelectedValue.ToString();
                 int Edad = int.Parse(txtEdad.Text);
-                Single Ingreso = Single.Parse(txtIngreso.Text);
+                float Ingreso = float.Parse(txtIngreso.Text);
                 int Puntaje = int.Parse(txtPuntaje.Text);
                 cnn.Grabar1(Nombre, Apellido, LugarNacimiento, Edad, Ingreso, Puntaje);
                 txtApellido.Text = "";

@@ -44,6 +44,8 @@
             this.mrcRegistro = new System.Windows.Forms.GroupBox();
             this.btnRegistrar = new System.Windows.Forms.Button();
             this.txtSalir = new System.Windows.Forms.Button();
+            this.optMasculino = new System.Windows.Forms.RadioButton();
+            this.optFemenino = new System.Windows.Forms.RadioButton();
             this.mrcRegistro.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -156,6 +158,8 @@
             // 
             // mrcRegistro
             // 
+            this.mrcRegistro.Controls.Add(this.optMasculino);
+            this.mrcRegistro.Controls.Add(this.optFemenino);
             this.mrcRegistro.Controls.Add(this.lblNombre);
             this.mrcRegistro.Controls.Add(this.txtIngreso);
             this.mrcRegistro.Controls.Add(this.lblSexo);
@@ -195,6 +199,28 @@
             this.txtSalir.Text = "&Salir";
             this.txtSalir.UseVisualStyleBackColor = true;
             // 
+            // optMasculino
+            // 
+            this.optMasculino.AutoSize = true;
+            this.optMasculino.Location = new System.Drawing.Point(132, 154);
+            this.optMasculino.Name = "optMasculino";
+            this.optMasculino.Size = new System.Drawing.Size(73, 17);
+            this.optMasculino.TabIndex = 3;
+            this.optMasculino.TabStop = true;
+            this.optMasculino.Text = "Masculino";
+            this.optMasculino.UseVisualStyleBackColor = true;
+            // 
+            // optFemenino
+            // 
+            this.optFemenino.AutoSize = true;
+            this.optFemenino.Location = new System.Drawing.Point(211, 154);
+            this.optFemenino.Name = "optFemenino";
+            this.optFemenino.Size = new System.Drawing.Size(71, 17);
+            this.optFemenino.TabIndex = 4;
+            this.optFemenino.TabStop = true;
+            this.optFemenino.Text = "Femenino";
+            this.optFemenino.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -204,6 +230,7 @@
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.mrcRegistro);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mrcRegistro.ResumeLayout(false);
@@ -230,6 +257,8 @@
         private System.Windows.Forms.GroupBox mrcRegistro;
         private System.Windows.Forms.Button btnRegistrar;
         private System.Windows.Forms.Button txtSalir;
+        private System.Windows.Forms.RadioButton optMasculino;
+        private System.Windows.Forms.RadioButton optFemenino;
     }
 }
 

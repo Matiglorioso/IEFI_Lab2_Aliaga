@@ -55,6 +55,14 @@ namespace IEFI_Lab2_Aliaga
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+        public void CargarCombo1(ComboBox paises)
+        {
+
+            while(DR.Read())
+            {
+                paises.Items.Add(DR[3]);
+            }
+        }
 
         public void CargarCombo(ComboBox paises)
         {
@@ -72,24 +80,36 @@ namespace IEFI_Lab2_Aliaga
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar los datos: " + ex.Message);
-            }           
+            }
 
         }
-        public void Grabar(string nombre, string apellido, string pais, int edad, Single ingreso, int puntaje)
+        public void Grabar(string nombre, string apellido, string pais, bool sexo, int edad, float ingreso, int puntaje)
         {
             try
             {
+                CNN.ConnectionString = Coneccion;
                 CNN.Open();
-                DataTable dt = DS.Tables[TablaSocios];
-                DataRow dr = dt.NewRow();
+
+                cmdSocios.Connection = CNN;
+                cmdSocios.CommandType = CommandType.TableDirect;
+                cmdSocios.CommandText = TablaSocios;
+
+                DASocios = new OleDbDataAdapter(cmdSocios);
+                DataSet DS = new DataSet();
+                DASocios.Fill(DS, TablaSocios);
+
+                DataTable tabla = DS.Tables[TablaSocios];
+                DataRow dr = tabla.NewRow();
 
                 dr["NOMBRE"] = nombre;
                 dr["APELLIDO"] = apellido;
                 dr["LUGAR_NACIMIENTO"] = pais;
+                dr["EDAD"] = edad;
+                dr["SEXO"] = sexo;
                 dr["INGRESO"] = ingreso;
                 dr["PUNTAJE"] = puntaje;
-                dt.Rows.Add(dr);
-                OleDbCommandBuilder cb = new OleDbCommandBuilder(DASocios );
+                tabla.Rows.Add(dr);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(DASocios);
                 DASocios.Update(DS, TablaSocios);
                 CNN.Close();
             }
@@ -102,9 +122,30 @@ namespace IEFI_Lab2_Aliaga
         {
             string cadena = "Insert into SOCIOS ([NOMBRE], [APELLIDO], [LUGAR_NACIMIENTO], [EDAD], [INGRESO], [PUNTAJE]" +
                 " values ('"+nombre+"','"+apellido+ "','"+pais+"','"+edad+"','"+ingreso+"','"+puntaje+"')";
-            SqlCommand comando = new SqlCommand(cadena, );
+            SqlCommand comando = new SqlCommand(cadena);
             comando.ExecuteNonQuery();
         }
-        
+        public void CargarPais(string pais)
+        {
+            cmdSocios.Connection = CNN;
+            cmdSocios.Connection.Open();
+
+            cmdSocios.CommandType = CommandType.Text;
+            cmdSocios.CommandText = "SELECT NombrePais FROM Paises WHERE NombrePais = ?";
+            cmdSocios.Parameters.AddWithValue("@Pais", pais);
+            DR = cmdSocios.ExecuteReader();
+
+            if(DR.HasRows)
+            {
+                MessageBox.Show("El pais ingresado ya existe");
+                return;
+            }
+            DR.Close();
+            cmdSocios.CommandText = "INSERT INTO Paises (NombrePais) VALUES (?)";
+            cmdSocios.Parameters.AddWithValue("@Pais", pais);
+
+            cmdSocios.ExecuteNonQuery();
+            cmdSocios.Connection.Close();
+        }
     }
 }

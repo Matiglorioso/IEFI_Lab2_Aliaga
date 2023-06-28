@@ -20,14 +20,27 @@ namespace IEFI_Lab2_Aliaga
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            x.RegistrarPais(txtAddPais.Text);
-            txtAddPais.Text = "";
+            try
+            {
+                if(txtAddPais.Text != "")
+                {
+                    x.RegistrarPais(txtAddPais.Text);
+                    txtAddPais.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Debes ingresar el nombre de un país", "¡ATENCION!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            frmPrincipal fr = new frmPrincipal();
-            fr.ShowDialog();
             this.Close();
         }
     }

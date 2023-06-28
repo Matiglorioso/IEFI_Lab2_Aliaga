@@ -183,6 +183,7 @@
             // optMasculino
             // 
             this.optMasculino.AutoSize = true;
+            this.optMasculino.Checked = true;
             this.optMasculino.Location = new System.Drawing.Point(132, 154);
             this.optMasculino.Name = "optMasculino";
             this.optMasculino.Size = new System.Drawing.Size(73, 17);
@@ -198,7 +199,6 @@
             this.optFemenino.Name = "optFemenino";
             this.optFemenino.Size = new System.Drawing.Size(71, 17);
             this.optFemenino.TabIndex = 4;
-            this.optFemenino.TabStop = true;
             this.optFemenino.Text = "Femenino";
             this.optFemenino.UseVisualStyleBackColor = true;
             // 
@@ -220,6 +220,7 @@
             this.txtSalir.TabIndex = 2;
             this.txtSalir.Text = "&Salir";
             this.txtSalir.UseVisualStyleBackColor = true;
+            this.txtSalir.Click += new System.EventHandler(this.txtSalir_Click);
             // 
             // frmRegistro
             // 

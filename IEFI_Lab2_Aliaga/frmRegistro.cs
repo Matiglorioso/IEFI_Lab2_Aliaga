@@ -26,8 +26,6 @@ namespace IEFI_Lab2_Aliaga
                 txtIngreso.Text = "";
                 txtNombre.Text = "";
                 txtPuntaje.Text = "";
-                cmbLugar.SelectedIndex = 0;
-                optMasculino.Checked = true;
                 cmbLugar.Items.Clear();
                 cnn.CargarCombo(cmbLugar);     
             }
@@ -43,18 +41,14 @@ namespace IEFI_Lab2_Aliaga
             {
                 string nombre = txtNombre.Text;
                 string apellido = txtApellido.Text;
-                string lugarNacimiento = cmbLugar.SelectedValue.ToString();
+                string lugarNacimiento = cmbLugar.Text;
                 int edad = int.Parse(txtEdad.Text);
                 bool sexo = optMasculino.Checked;
                 decimal ingreso = decimal.Parse(txtIngreso.Text);
                 int puntaje = int.Parse(txtPuntaje.Text);
-               if(ValidarDatos())
+                if (ValidarDatos())
                 {
                     cnn.RegistrarSocio(nombre, apellido, lugarNacimiento, edad, sexo, ingreso, puntaje);
-
-                    // No es necesario verificar el valor de retorno, ya que el método no devuelve un valor
-                    MessageBox.Show("Socio registrado correctamente.");
-
                     txtApellido.Text = "";
                     txtEdad.Text = "";
                     txtIngreso.Text = "";
@@ -62,9 +56,6 @@ namespace IEFI_Lab2_Aliaga
                     txtPuntaje.Text = "";
                     cmbLugar.SelectedIndex = 0;
                 }
-                
-
-
             }
             catch (Exception ex)
             {
@@ -114,5 +105,9 @@ namespace IEFI_Lab2_Aliaga
             return true;
         }
 
+        private void txtSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

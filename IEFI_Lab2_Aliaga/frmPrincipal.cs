@@ -28,5 +28,10 @@ namespace IEFI_Lab2_Aliaga
             frmAgregarPais frmp = new frmAgregarPais();
             frmp.ShowDialog();
         }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

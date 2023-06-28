@@ -16,7 +16,7 @@ namespace IEFI_Lab2_Aliaga
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmPrinipakl());
+            Application.Run(new frmPrincipal());
         }
     }
 }

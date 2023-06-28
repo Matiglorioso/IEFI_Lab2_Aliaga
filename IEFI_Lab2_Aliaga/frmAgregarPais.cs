@@ -20,13 +20,13 @@ namespace IEFI_Lab2_Aliaga
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            x.CargarPais(txtAddPais.Text);
+            x.RegistrarPais(txtAddPais.Text);
             txtAddPais.Text = "";
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            frmPrinipakl fr = new frmPrinipakl();
+            frmPrincipal fr = new frmPrincipal();
             fr.ShowDialog();
             this.Close();
         }

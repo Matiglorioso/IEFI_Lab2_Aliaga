@@ -76,100 +76,162 @@ namespace IEFI_Lab2_Aliaga
             }
 
         }
-        public void Grabar(string nombre, string apellido, string pais, bool sexo, int edad, float ingreso, int puntaje)
+
+        // Método para registrar un nuevo socio en la base de datos
+        public void RegistrarSocio(string nombre, string apellido, string lugarNacimiento, int edad, bool sexo, decimal ingreso, int puntaje)
         {
+            string connectionString = Coneccion;
+            string insertQuery = "INSERT INTO Socios (NOMBRE, APELLIDO, LUGAR_NACIMIENTO, EDAD, SEXO, INGRESO, PUNTAJE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            OleDbConnection connection = null;
+            OleDbCommand command = null;
+
             try
             {
-                CNN.ConnectionString = Coneccion;
-                CNN.Open();
+                connection = new OleDbConnection(connectionString);
+                command = new OleDbCommand(insertQuery, connection);
 
-                cmdSocios.Connection = CNN;
-                cmdSocios.CommandType = CommandType.TableDirect;
-                cmdSocios.CommandText = TablaSocios;
+                // Parámetros del comando para evitar problemas de seguridad y tipo de datos
+                command.Parameters.Add("@NOMBRE", OleDbType.VarChar).Value = nombre;
+                command.Parameters.Add("@APELLIDO", OleDbType.VarChar).Value = apellido;
+                command.Parameters.Add("@LUGAR_NACIMIENTO", OleDbType.VarChar).Value = lugarNacimiento;
+                command.Parameters.Add("@EDAD", OleDbType.Integer).Value = edad.ToString();
+                command.Parameters.Add("@SEXO", OleDbType.Boolean).Value = sexo;
+                command.Parameters.Add("@INGRESO", OleDbType.Currency).Value = ingreso;
+                command.Parameters.Add("@PUNTAJE", OleDbType.Integer).Value = puntaje;
 
-                DASocios = new OleDbDataAdapter(cmdSocios);
-                DataSet DS = new DataSet();
-                DASocios.Fill(DS, TablaSocios);
-
-                DataTable tabla = DS.Tables[TablaSocios];
-                DataRow dr = tabla.NewRow();
-
-                dr["NOMBRE"] = nombre;
-                dr["APELLIDO"] = apellido;
-                dr["LUGAR_NACIMIENTO"] = pais;
-                dr["EDAD"] = edad;
-                dr["SEXO"] = sexo;
-                dr["INGRESO"] = ingreso;
-                dr["PUNTAJE"] = puntaje;
-                tabla.Rows.Add(dr);
-                OleDbCommandBuilder cb = new OleDbCommandBuilder(DASocios);
-                DASocios.Update(DS, TablaSocios);
-                CNN.Close();
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Socio registrado correctamente.");
+                    // Aquí puedes realizar otras acciones después de registrar al socio
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo registrar al socio.");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show("Error al registrar al socio: " + ex.Message);
             }
-        }
-        public void Grabar1(string nombre, string apellido, string pais, int edad, float ingreso, int puntaje)
-        {
-            string cadena = "Insert into SOCIOS ([NOMBRE], [APELLIDO], [LUGAR_NACIMIENTO], [EDAD], [INGRESO], [PUNTAJE]" +
-                " values ('"+nombre+"','"+apellido+ "','"+pais+"','"+edad+"','"+ingreso+"','"+puntaje+"')";
-            SqlCommand comando = new SqlCommand(cadena);
-            comando.ExecuteNonQuery();
-        }
-        public void CargarPais(string pais)
-        {
-            cmdSocios.Connection = CNN;
-            cmdSocios.Connection.Open();
-
-            cmdSocios.CommandType = CommandType.Text;
-            cmdSocios.CommandText = "SELECT COUNT(*) FROM Paises WHERE NombrePais = @Pais";
-            cmdSocios.Parameters.AddWithValue("@Pais", pais);
-            int count = (int)cmdSocios.ExecuteScalar();
-
-            if (count > 0)
+            finally
             {
-                MessageBox.Show("El país ingresado ya existe");
-            }
-            else
-            {
-                cmdSocios.Parameters.Clear();
-                cmdSocios.CommandText = "INSERT INTO Paises (NombrePais) VALUES (@Pais)";
-                cmdSocios.Parameters.AddWithValue("@Pais", pais);
-
-                try
+                // Cerrar y liberar manualmente los objetos de conexión y comando
+                if (command != null)
                 {
-                    cmdSocios.ExecuteNonQuery();
-                    MessageBox.Show("El país ha sido cargado exitosamente.");
+                    command.Dispose();
+                    command = null;
                 }
-                catch (Exception ex)
+                if (connection != null)
                 {
-                    MessageBox.Show("Error al cargar el país: " + ex.Message);
+                    if (connection.State != ConnectionState.Closed)
+                    {
+                        connection.Close();
+                    }
+                    connection.Dispose();
+                    connection = null;
                 }
             }
-
-            cmdSocios.Connection.Close();
-
-            //cmdSocios.Connection = CNN;
-            //cmdSocios.Connection.Open();
-
-            //cmdSocios.CommandType = CommandType.Text;
-            //cmdSocios.CommandText = "SELECT NombrePais FROM Paises WHERE NombrePais = ?";
-            //cmdSocios.Parameters.AddWithValue("@Pais", pais);
-            //DR = cmdSocios.ExecuteReader();
-
-            //if(DR.HasRows)
-            //{
-            //    MessageBox.Show("El pais ingresado ya existe");
-            //    return;
-            //}
-            //DR.Close();
-            //cmdSocios.CommandText = "INSERT INTO Paises (NombrePais) VALUES (?)";
-            //cmdSocios.Parameters.AddWithValue("@Pais", pais);
-
-            //cmdSocios.ExecuteNonQuery();
-            //cmdSocios.Connection.Close();
         }
+        public void RegistrarPais(string nombrePais)
+        {
+            string selectQuery = "SELECT COUNT(*) FROM Paises WHERE NombrePais = ?";
+            string insertQuery = "INSERT INTO Paises (NombrePais) VALUES (?)";
+
+            OleDbConnection connection = null;
+            OleDbCommand command = null;
+
+            try
+            {
+                connection = new OleDbConnection(Coneccion);
+                connection.Open();
+
+                // Verificar si el país ya está registrado en la base de datos
+                command = new OleDbCommand(selectQuery, connection);
+                command.Parameters.AddWithValue("@NombrePais", nombrePais);
+
+                int existingCount = (int)command.ExecuteScalar();
+                if (existingCount > 0)
+                {
+                    MessageBox.Show("El país ya ha sido registrado anteriormente.");
+                    return; // Salir del método sin realizar el registro
+                }
+
+                // Insertar el nuevo país en la base de datos
+                command = new OleDbCommand(insertQuery, connection);
+                command.Parameters.AddWithValue("@NombrePais", nombrePais);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("País registrado correctamente.");
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo registrar el país.");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al registrar el país: " + ex.Message);
+                throw; // Vuelve a lanzar la excepción para propagarla hacia arriba
+            }
+            finally
+            {
+                // Cerrar la conexión y liberar los recursos
+                if (command != null)
+                {
+                    command.Dispose();
+                }
+                if (connection != null)
+                {
+                    if (connection.State != ConnectionState.Closed)
+                    {
+                        connection.Close();
+                    }
+                    connection.Dispose();
+                }
+            }
+        }
+
+
+        //public void CargarPais(string pais)
+        //{
+        //    cmdSocios.Connection = CNN;
+        //    cmdSocios.Connection.Open();
+
+        //    cmdSocios.CommandType = CommandType.Text;
+        //    cmdSocios.CommandText = "SELECT COUNT(*) FROM Paises WHERE NombrePais = @Pais";
+        //    cmdSocios.Parameters.AddWithValue("@Pais", pais);
+        //    int count = (int)cmdSocios.ExecuteScalar();
+
+        //    if (count > 0)
+        //    {
+        //        MessageBox.Show("El país ingresado ya existe");
+        //    }
+        //    else
+        //    {
+        //        cmdSocios.Parameters.Clear();
+        //        cmdSocios.CommandText = "INSERT INTO Paises (NombrePais) VALUES (@Pais)";
+        //        cmdSocios.Parameters.AddWithValue("@Pais", pais);
+
+        //        try
+        //        {
+        //            cmdSocios.ExecuteNonQuery();
+        //            MessageBox.Show("El país ha sido cargado exitosamente.");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show("Error al cargar el país: " + ex.Message);
+        //        }
+        //    }
+
+        //    cmdSocios.Connection.Close();
+
+
+        // }
     }
 }

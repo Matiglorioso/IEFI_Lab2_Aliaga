@@ -57,11 +57,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EL_CLUBDataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="frmRegistro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="frmRegistro.Designer.cs">
+      <DependentUpon>frmRegistro.cs</DependentUpon>
     </Compile>
     <Compile Include="frmAgregarPais.cs">
       <SubType>Form</SubType>
@@ -69,22 +69,22 @@
     <Compile Include="frmAgregarPais.Designer.cs">
       <DependentUpon>frmAgregarPais.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPrinipakl.cs">
+    <Compile Include="frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPrinipakl.Designer.cs">
-      <DependentUpon>frmPrinipakl.cs</DependentUpon>
+    <Compile Include="frmPrincipal.Designer.cs">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="frmRegistro.resx">
+      <DependentUpon>frmRegistro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmAgregarPais.resx">
       <DependentUpon>frmAgregarPais.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPrinipakl.resx">
-      <DependentUpon>frmPrinipakl.cs</DependentUpon>
+    <EmbeddedResource Include="frmPrincipal.resx">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -28,26 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.msMenu = new System.Windows.Forms.MenuStrip();
             this.registrarNuevoSocioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.registrarNuevopaisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblBienv = new System.Windows.Forms.Label();
             this.lblSelecc = new System.Windows.Forms.Label();
-            this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
+            this.msMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // msMenu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.msMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.registrarNuevoSocioToolStripMenuItem,
             this.registrarNuevopaisToolStripMenuItem,
             this.salirToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(575, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.msMenu.Location = new System.Drawing.Point(0, 0);
+            this.msMenu.Name = "msMenu";
+            this.msMenu.Size = new System.Drawing.Size(575, 24);
+            this.msMenu.TabIndex = 0;
+            this.msMenu.Text = "menuStrip1";
             // 
             // registrarNuevoSocioToolStripMenuItem
             // 
@@ -62,6 +62,13 @@
             this.registrarNuevopaisToolStripMenuItem.Size = new System.Drawing.Size(125, 20);
             this.registrarNuevopaisToolStripMenuItem.Text = "Registrar nuevo &pais";
             this.registrarNuevopaisToolStripMenuItem.Click += new System.EventHandler(this.registrarNuevopaisToolStripMenuItem_Click);
+            // 
+            // salirToolStripMenuItem
+            // 
+            this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.salirToolStripMenuItem.Text = "&Salir";
+            this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
             // 
             // lblBienv
             // 
@@ -83,13 +90,6 @@
             this.lblSelecc.TabIndex = 2;
             this.lblSelecc.Text = "Seleccione una opción en la barra.";
             // 
-            // salirToolStripMenuItem
-            // 
-            this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-            this.salirToolStripMenuItem.Text = "&Salir";
-            this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -97,12 +97,12 @@
             this.ClientSize = new System.Drawing.Size(575, 262);
             this.Controls.Add(this.lblSelecc);
             this.Controls.Add(this.lblBienv);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.msMenu);
+            this.MainMenuStrip = this.msMenu;
             this.Name = "frmPrincipal";
             this.Text = "¡Bienvenidxs!";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.msMenu.ResumeLayout(false);
+            this.msMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,7 +110,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip msMenu;
         private System.Windows.Forms.ToolStripMenuItem registrarNuevoSocioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registrarNuevopaisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;

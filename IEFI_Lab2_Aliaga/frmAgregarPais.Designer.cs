@@ -39,11 +39,11 @@
             // lblAddPais
             // 
             this.lblAddPais.AutoSize = true;
-            this.lblAddPais.Location = new System.Drawing.Point(70, 39);
+            this.lblAddPais.Location = new System.Drawing.Point(79, 44);
             this.lblAddPais.Name = "lblAddPais";
-            this.lblAddPais.Size = new System.Drawing.Size(83, 13);
+            this.lblAddPais.Size = new System.Drawing.Size(66, 13);
             this.lblAddPais.TabIndex = 0;
-            this.lblAddPais.Text = "Agrega un país:";
+            this.lblAddPais.Text = "Nuevo país:";
             // 
             // btnAgregar
             // 
@@ -92,7 +92,7 @@
             this.ClientSize = new System.Drawing.Size(339, 154);
             this.Controls.Add(this.mrcAddPais);
             this.Name = "frmAgregarPais";
-            this.Text = "frmAgregarPais";
+            this.Text = "¡Agregue un nuevo país!";
             this.mrcAddPais.ResumeLayout(false);
             this.mrcAddPais.PerformLayout();
             this.ResumeLayout(false);
